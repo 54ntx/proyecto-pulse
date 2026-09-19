@@ -6,8 +6,10 @@ import os
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-import os
 import mysql.connector
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def inicializar_base_datos():
     host = os.environ.get('MYSQL_HOST')
@@ -19,12 +21,13 @@ def inicializar_base_datos():
     if host and user:
         try:
             conn = mysql.connector.connect(
-                host=host.strip(),
-                user=user.strip(),
-                password=password.strip() if password else "",
-                database=database.strip() if database else "",
-                port=int(port_str.strip())
-            )
+    host=host.strip(),
+    user=user.strip(),
+    password=password.strip() if password else "",
+    database=database.strip() if database else "",
+    port=int(port_str.strip()),
+    ssl_disabled=False
+)
             cursor = conn.cursor()
             with open('pulse_db.sql', 'r', encoding='utf-8') as f:
                 sql_script = f.read()
