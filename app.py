@@ -11,10 +11,10 @@ app = Flask(__name__)
 app.secret_key = 'clave_secreta_pulse_2026'
 
 # --- CONFIGURACIÓN DE LA BASE DE DATOS ---
-app.config['MYSQL_HOST'] = '127.0.0.1'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'pulse_db'
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST', '127.0.0.1')
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER', 'root')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD', '')
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB', 'pulse_db')
 
 UPLOAD_FOLDER = os.path.join('static', 'videos')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
