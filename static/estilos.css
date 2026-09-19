@@ -2,8 +2,8 @@
    ESTILOS GENERALES Y FONDO DE LA PÁGINA
    ========================================================== */
 body {
-    background: linear-gradient(rgba(4, 2, 10, 0.5), rgba(4, 2, 10, 0.6)), 
-                url('/static/IMAGENES/fondo.jpg') no-repeat center center fixed;
+   background: linear-gradient(rgba(4, 2, 10, 0.5), rgba(4, 2, 10, 0.6)), 
+            url('IMAGENES/fondo.jpg') no-repeat center center fixed;
     background-size: 130% auto;
     color: #ffffff;
     font-family: 'Outfit', sans-serif;
