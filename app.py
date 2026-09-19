@@ -6,6 +6,34 @@ import os
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
+import mysql.connector
+
+def inicializar_base_datos():
+    if os.environ.get('MYSQL_HOST'):
+        try:
+            conn = mysql.connector.connect(
+                host=os.environ.get('MYSQL_HOST'),
+                user=os.environ.get('MYSQL_USER'),
+                password=os.environ.get('MYSQL_PASSWORD'),
+                database=os.environ.get('MYSQL_DB'),
+                port=int(os.environ.get('MYSQL_PORT', 3306))
+            )
+            cursor = conn.cursor()
+            with open('pulse_db.sql', 'r', encoding='utf-8') as f:
+                sql_script = f.read()
+            for statement in sql_script.split(';'):
+                if statement.strip():
+                    cursor.execute(statement)
+            conn.commit()
+            cursor.close()
+            conn.close()
+            print("¡Tablas verificadas/creadas correctamente en la nube!")
+        except Exception as e:
+            print(f"Error al inicializar la base de datos: {e}")
+
+# Llama a la función justo al iniciar la app
+inicializar_base_datos()
 
 app = Flask(__name__)
 app.secret_key = 'clave_secreta_pulse_2026'
