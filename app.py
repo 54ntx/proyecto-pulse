@@ -10,14 +10,20 @@ import os
 import mysql.connector
 
 def inicializar_base_datos():
-    if os.environ.get('MYSQL_HOST'):
+    host = os.environ.get('MYSQL_HOST')
+    user = os.environ.get('MYSQL_USER')
+    password = os.environ.get('MYSQL_PASSWORD')
+    database = os.environ.get('MYSQL_DB')
+    port_str = os.environ.get('MYSQL_PORT', '3306')
+    
+    if host and user:
         try:
             conn = mysql.connector.connect(
-                host=os.environ.get('MYSQL_HOST'),
-                user=os.environ.get('MYSQL_USER'),
-                password=os.environ.get('MYSQL_PASSWORD'),
-                database=os.environ.get('MYSQL_DB'),
-                port=int(os.environ.get('MYSQL_PORT', 3306))
+                host=host.strip(),
+                user=user.strip(),
+                password=password.strip() if password else "",
+                database=database.strip() if database else "",
+                port=int(port_str.strip())
             )
             cursor = conn.cursor()
             with open('pulse_db.sql', 'r', encoding='utf-8') as f:
